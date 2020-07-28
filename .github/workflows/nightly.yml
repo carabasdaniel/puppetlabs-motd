@@ -30,8 +30,8 @@ jobs:
     - name: Install agent
       uses: nick-invision/retry@v1
       with:
-        timeout_minutes: 5
-        max_attempts: 3 
+        timeout_minutes: 10
+        max_attempts: 4
         command: bundle exec rake 'litmus:install_agent'
     - name: Install module
       run: bundle exec rake 'litmus:install_module'
