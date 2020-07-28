@@ -22,11 +22,16 @@ jobs:
         {
           "osList": [
             "centos-7-v20200618",
-            "ubuntu-1804-bionic-v20200626"
+            "ubuntu-1804-bionic-v20200626",
+            "centos-8-v20200618",
+            "ubuntu-2004-focal-v20200625",
+            "ubuntu-1604-xenial-v20200611",
+            "rhel-7-v20200618",
+            "rhel-8-v20200618"
           ]
         }    
         EOF
-        curl -X POST -H "Authorization: Bearer ${{ secrets.token }}" https://provision-service-6f3kfepqcq-ez.a.run.app/v1/provision --data @test_machines.json > inventory.yaml
+        curl -X POST -H "Authorization:bearer ${{ secrets.token }}" https://provision-service-6f3kfepqcq-ez.a.run.app/v1/provision --data @test_machines.json > inventory.yaml
     - name: Install gems
       run: bundle install
     - name: Install agent
@@ -42,4 +47,4 @@ jobs:
     - name: Remove test environment
       if: ${{ always() }}
       run: |
-        curl -X DELETE -H "Authorization: Bearer ${{ secrets.token }}" https://provision-service-6f3kfepqcq-ez.a.run.app/v1/provision
+        curl -X DELETE -H "Authorization:bearer ${{ secrets.token }}" https://provision-service-6f3kfepqcq-ez.a.run.app/v1/provision
