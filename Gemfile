@@ -71,4 +71,6 @@ extra_gemfiles.each do |gemfile|
     eval(File.read(gemfile), binding)
   end
 end
+
+gem "puppet_litmus", git: 'https://github.com/carabasdaniel/puppet_litmus.git', branch: 'set_sudo_pass'
 # vim: syntax=ruby
