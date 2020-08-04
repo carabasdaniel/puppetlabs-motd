@@ -27,18 +27,27 @@ jobs:
             "ubuntu-2004-focal-v20200625",
             "ubuntu-1604-xenial-v20200611",
             "rhel-7-v20200618",
-            "rhel-8-v20200618"
+            "rhel-8-v20200618",
+            "windows-server-2016-dc-v20200609"
           ]
         }    
         EOF
         curl -X POST -H "Authorization:bearer ${{ secrets.token }}" https://provision-service-6f3kfepqcq-ez.a.run.app/v1/provision --data @test_machines.json > inventory.yaml
     - name: Install gems
       run: bundle install
+    - name: Fix windows agent install
+      uses: nick-invision/retry@v1
+      with:
+        timeout_minutes: 30
+        max_attempts: 5
+        retry_wait_seconds: 120
+        command: bolt script run fix_agent_install_winrm.ps1 --inventory inventory.yaml --targets winrm_nodes
     - name: Install agent
       uses: nick-invision/retry@v1
       with:
-        timeout_minutes: 15
+        timeout_minutes: 30
         max_attempts: 5
+        retry_wait_seconds: 60
         command: bundle exec rake 'litmus:install_agent'
     - name: Install module
       run: bundle exec rake 'litmus:install_module'
