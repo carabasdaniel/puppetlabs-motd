@@ -21,8 +21,7 @@ jobs:
         {
           "url" : "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID",
           "osList": [
-            "centos-7-v20200618",
-            "windows-server-2016-dc-v20200609"
+            "centos-7-v20200618"
           ]
         }    
         EOF
@@ -40,3 +39,13 @@ jobs:
       run: bundle exec rake 'litmus:install_module'
     - name: Run acceptance tests
       run: bundle exec rake 'litmus:acceptance:parallel'
+    - name: Remove test environment
+      if: ${{ always() }}
+      run: |
+        uniqueid=$(cat inventory.yaml | grep -m 1 uuid | cut -d ':' -f 2 | tr -d ' ')
+        cat <<EOF >> delete_resources.json
+        {
+          "uuid" : "$uniqueid"
+        }
+        EOF
+        curl -X DELETE -H "Authorization:bearer ${{ secrets.token }}" https://provision-service-6f3kfepqcq-ez.a.run.app/v1/provision --data @delete_resources.json
