@@ -21,7 +21,7 @@ jobs:
         {
           "url" : "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID",
           "osList": [
-            "sles-15-sp1-v20200610"
+            "sles-15-sp2-v20200804"
           ]
         }    
         EOF
