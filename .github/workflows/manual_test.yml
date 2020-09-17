@@ -20,12 +20,15 @@ jobs:
         cat <<EOF >> test_machines.json
         {
           "url" : "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID",
-          "osList": [
-            "sles-15-sp2-v20200804"
+          "VMs": [
+            {
+             "cloud": "gcp",
+             "images": ["sles-15-sp2-v20200804"]
+            }
           ]
         }    
         EOF
-        curl -X POST -H "Authorization:bearer ${{ secrets.token }}" https://provision-service-6f3kfepqcq-ez.a.run.app/v1/provision --data @test_machines.json > inventory.yaml
+        curl -X POST -H "Authorization:bearer ${{ secrets.token }}" https://prov-serv-6f3kfepqcq-ew.a.run.app/v1/provision --data @test_machines.json > inventory.yaml
     - name: Install gems
       run: bundle install
     - name: Install agent
@@ -48,4 +51,6 @@ jobs:
           "uuid" : "$uniqueid"
         }
         EOF
-        curl -X DELETE -H "Authorization:bearer ${{ secrets.token }}" https://provision-service-6f3kfepqcq-ez.a.run.app/v1/provision --data @delete_resources.json
+        echo "Removing uuid"
+        cat delete_resources.json
+        curl -X DELETE -H "Authorization:bearer ${{ secrets.token }}" https://prov-serv-6f3kfepqcq-ew.a.run.app/v1/provision --data @delete_resources.json
