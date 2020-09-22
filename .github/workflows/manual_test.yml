@@ -23,6 +23,8 @@ jobs:
           "VMs": [
             {
              "cloud": "gcp",
+             "region": "europe-west1",
+             "zone": "europe-west1-d",
              "images": ["sles-15-sp2-v20200804"]
             }
           ]
