@@ -28,7 +28,7 @@ jobs:
           ]
         }    
         EOF
-        curl -X POST -H "Authorization:bearer ${{ secrets.token }}" https://prov-serv-6f3kfepqcq-ew.a.run.app/v1/provision --data @test_machines.json > inventory.yaml
+        curl -X POST -H "Authorization:bearer ${{ secrets.token }}" https://prov-serv-dani-6f3kfepqcq-ez.a.run.app/v1/provision --data @test_machines.json > inventory.yaml
     - name: Install gems
       run: bundle install
     - name: Install agent
@@ -53,4 +53,4 @@ jobs:
         EOF
         echo "Removing uuid"
         cat delete_resources.json
-        curl -X DELETE -H "Authorization:bearer ${{ secrets.token }}" https://prov-serv-6f3kfepqcq-ew.a.run.app/v1/provision --data @delete_resources.json
+        curl -X DELETE -H "Authorization:bearer ${{ secrets.token }}" https://prov-serv-dani-6f3kfepqcq-ez.a.run.app/v1/provision --data @delete_resources.json
