@@ -30,7 +30,7 @@ jobs:
           ]
         }    
         EOF
-        curl -X POST -H "Authorization:bearer ${{ secrets.token }}" https://facade-facade-rework-6f3kfepqcq-ew.a.run.app/v1/provision --data @test_machines.json > inventory.yaml
+        curl -X POST -H "Authorization:bearer ${{ secrets.token }}" https://facade-validation-6f3kfepqcq-ew.a.run.app/v1/provision --data @test_machines.json > inventory.yaml
     - name: Show inventory
       run: cat inventory.yaml
     - name: Install gems
@@ -57,4 +57,4 @@ jobs:
         EOF
         echo "Removing uuid"
         cat delete_resources.json
-        curl -X DELETE -H "Authorization:bearer ${{ secrets.token }}" https://facade-facade-rework-6f3kfepqcq-ew.a.run.app/v1/provision --data @delete_resources.json
+        curl -X DELETE -H "Authorization:bearer ${{ secrets.token }}" https://facade-validation-6f3kfepqcq-ew.a.run.app/v1/provision --data @delete_resources.json
